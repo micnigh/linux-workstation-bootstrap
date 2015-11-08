@@ -94,8 +94,9 @@ PACKAGES=(
 
 ); sudo apt-get install -y --force-yes -o Dpkg::Options::="--force-overwrite" "${PACKAGES[@]}"; unset PACKAGES
 
-sudo umake -y android; # install android related tools
-sudo umake -y ide eclipse; # install eclipse
+sudo apt-get install -y ubuntu-make; #install ubuntu-make
+sudo umake android $HOME/.local/share/umake/android/android-studio --accept-license; # install android tools
+sudo umake ide eclipse $HOME/.local/share/umake/ide/eclipse; # install eclipse
 
 # set answers to package prompts
 echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections;
