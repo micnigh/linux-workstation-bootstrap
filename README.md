@@ -25,12 +25,14 @@ sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /et
 sudo sh -c 'curl -sSL https://get.docker.com/ | sh'; # install latest docker tools
 sudo usermod -aG docker "$(whoami)"
 
+# docker-machine
 curl -L $(curl -s https://api.github.com/repos/docker/machine/releases/latest | grep 'browser_' | grep 'docker-machine_linux-amd64' | cut -d\" -f4) > machine.zip && \
 unzip machine.zip && \
 rm machine.zip && \
 sudo mv docker-machine* /usr/local/bin && \
 sudo chmod +x /usr/local/bin/docker-machine*
 
+# docker-compose
 curl -L $(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'browser_' | grep 'docker-compose-Linux-x86_64' | cut -d\" -f4) > docker-compose && \
 sudo mv docker-compose /usr/local/bin && \
 sudo chmod +x /usr/local/bin/docker-compose
@@ -40,9 +42,6 @@ sudo apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E
 echo 'deb http://linux.dropbox.com/ubuntu trusty main' | sudo tee /etc/apt/sources.list.d/dropbox.list
 
 sudo apt-get update;
-sudo apt-get upgrade -y;
-sudo apt-get dist-upgrade -y;
-sudo apt-get autoremove -y;
 
 #
 # Install Packages
@@ -62,6 +61,10 @@ PACKAGES=(
   subversion                # good version control
 
 ); sudo apt-get install -y --force-yes -o Dpkg::Options::="--force-overwrite" "${PACKAGES[@]}"; unset PACKAGES
+
+sudo apt-get upgrade -y;
+sudo apt-get dist-upgrade -y;
+sudo apt-get autoremove -y;
 
 PACKAGES=(
 
