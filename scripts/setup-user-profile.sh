@@ -1,5 +1,20 @@
 #!/bin/bash
 
+# st3 - install theme
+mkdir -p $HOME/.config/sublime-text-3/Packages/
+cd $HOME/.config/sublime-text-3/Packages/
+git clone https://github.com/buymeasoda/soda-theme/ "Theme - Soda"
+
+# st3 - Package manager
+mkdir -p $HOME/.config/sublime-text-3/Installed\ Packages
+curl \
+  -o $HOME/.config/sublime-text-3/Installed\ Packages/Package\ Control.sublime-package \
+  --remote-name http://sublime.wbond.net/Package%20Control.sublime-package
+
+curl \
+  -o $HOME/.config/sublime-text-3/Packages/User/Preferences.sublime-settings \
+  --remote-name https://raw.githubusercontent.com/micnigh/linux-mint-17-2-cinnamon-workstation-bootstrap/master/files/files/.config/sublime-text-3/Packages/User/Preferences.sublime-settings
+
 # apm packages
 apm install \
   minimap \
