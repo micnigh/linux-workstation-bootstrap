@@ -8,6 +8,11 @@ sudo sed -i 's/archive\.ubuntu\.com/mirrors.us.kernel.org/' /etc/apt/sources.lis
 sudo apt-get update
 sudo apt-get install -y curl
 
+# Ugrade kernel/drivers, then reboot and continue
+sudo apt-get upgrade -y;
+sudo apt-get dist-upgrade -y;
+sudo apt-get autoremove -y;
+
 #
 # Setup PPAs
 #
@@ -62,9 +67,7 @@ PACKAGES=(
 
 ); sudo apt-get install -y --force-yes -o Dpkg::Options::="--force-overwrite" "${PACKAGES[@]}"; unset PACKAGES
 
-sudo apt-get upgrade -y;
-sudo apt-get dist-upgrade -y;
-sudo apt-get autoremove -y;
+
 
 PACKAGES=(
 
