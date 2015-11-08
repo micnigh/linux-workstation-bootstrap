@@ -26,6 +26,10 @@ sudo add-apt-repository -y ppa:ubuntu-desktop/ubuntu-make; # util to install var
 wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
 
+# dropbox
+sudo apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E
+echo 'deb http://linux.dropbox.com/ubuntu trusty main' | sudo tee /etc/apt/sources.list.d/dropbox.list
+
 # docker
 sudo sh -c 'curl -sSL https://get.docker.com/ | sh'; # install latest docker tools
 sudo usermod -aG docker "$(whoami)"
@@ -41,10 +45,6 @@ sudo chmod +x /usr/local/bin/docker-machine*
 curl -L $(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'browser_' | grep 'docker-compose-Linux-x86_64' | cut -d\" -f4) > docker-compose && \
 sudo mv docker-compose /usr/local/bin && \
 sudo chmod +x /usr/local/bin/docker-compose
-
-# dropbox
-sudo apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E
-echo 'deb http://linux.dropbox.com/ubuntu trusty main' | sudo tee /etc/apt/sources.list.d/dropbox.list
 
 sudo apt-get update;
 
@@ -67,7 +67,8 @@ PACKAGES=(
 
 ); sudo apt-get install -y --force-yes -o Dpkg::Options::="--force-overwrite" "${PACKAGES[@]}"; unset PACKAGES
 
-
+# virtualbox
+sudo apt-get install -y virtualbox-5.0
 
 PACKAGES=(
 
@@ -152,8 +153,7 @@ EOF
 echo 2048    | sudo tee /proc/sys/fs/inotify/max_user_instances
 echo 1048576 | sudo tee /proc/sys/fs/inotify/max_user_watches
 
-# TODO: do we still want powerline?  is this the right way to install?
-# install powerline fonts - fontconfig version - adds symbols rather than patching fonts
+# install powerline fonts - fontconfig version - adds symbols rather than patching fonts directly
 sudo wget -O /etc/fonts/conf.d/10-powerline-symbols.conf https://raw.github.com/Lokaltog/powerline/develop/font/10-powerline-symbols.conf
 sudo wget -O /usr/share/fonts/PowerlineSymbols.otf https://raw.github.com/Lokaltog/powerline/develop/font/PowerlineSymbols.otf
 sudo dpkg-reconfigure fontconfig
