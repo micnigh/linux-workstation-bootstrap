@@ -67,6 +67,10 @@ PACKAGES=(
 
 ); sudo apt-get install -y --force-yes -o Dpkg::Options::="--force-overwrite" "${PACKAGES[@]}"; unset PACKAGES
 
+# KVM - a linux virtual machine tool - great for android emulation
+#sudo apt-get install -y qemu-kvm libvirt-bin bridge-utils virt-manager
+#sudo adduser "$(whoami)" libvirtd
+
 # virtualbox
 sudo apt-get install -y virtualbox-5.0
 
