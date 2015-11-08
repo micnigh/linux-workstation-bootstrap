@@ -12,18 +12,28 @@ sudo apt-get install -y curl
 # Setup PPAs
 #
 sudo add-apt-repository -y ppa:webupd8team/sublime-text-3; # sublime text 3
-sudo add-apt-repository -y ppa:chris-lea/node.js;          # nodejs
+curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -; # nodejs 4 - [see](https://github.com/nodesource/distributions)
 
 sudo add-apt-repository -y ppa:webupd8team/atom; # atom
-sudo add-apt-repository -y ppa:nilarimogard/webupd8; # android tools
+sudo add-apt-repository -y ppa:ubuntu-desktop/ubuntu-make; # util to install various ides/dev tools on ubuntu
 
 # chrome
 wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
 
 # docker
-sudo sh -c "curl http://get.docker.io/gpg | apt-key add -"
-sudo sh -c "echo deb https://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
+sudo sh -c 'curl -sSL https://get.docker.com/ | sh'; # install latest docker tools
+sudo usermod -aG docker "$(whoami)"
+
+curl -L $(curl -s https://api.github.com/repos/docker/machine/releases/latest | grep 'browser_' | grep 'docker-machine_linux-amd64' | cut -d\" -f4) > machine.zip && \
+unzip machine.zip && \
+rm machine.zip && \
+sudo mv docker-machine* /usr/local/bin && \
+sudo chmod +x /usr/local/bin/docker-machine*
+
+curl -L $(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'browser_' | grep 'docker-compose-Linux-x86_64' | cut -d\" -f4) > docker-compose && \
+sudo mv docker-compose /usr/local/bin && \
+sudo chmod +x /usr/local/bin/docker-compose
 
 # dropbox
 sudo apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E
@@ -67,8 +77,6 @@ PACKAGES=(
 
   # programming lang|tools
   nodejs                    # Javascript v8 server engine
-  lxc-docker                # Docker - virtual apps in containers using LXC
-  apparmor                  # Required for docker, but not as a dep - see http://stackoverflow.com/a/23572617
 
 ); sudo apt-get install -y --force-yes -o Dpkg::Options::="--force-overwrite" "${PACKAGES[@]}"; unset PACKAGES
 
@@ -78,10 +86,10 @@ PACKAGES=(
   python-gpgme # dropbox support lib
   gtk-redshift # redshift - adjusts displays to minimize blue light at night
 
-  android-tools-adb      # android adb
-  android-tools-fastboot # android fastboot
-
 ); sudo apt-get install -y --force-yes -o Dpkg::Options::="--force-overwrite" "${PACKAGES[@]}"; unset PACKAGES
+
+sudo umake -y android; # install android related tools
+sudo umake -y ide eclipse; # install eclipse
 
 # set answers to package prompts
 echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections;
@@ -125,9 +133,6 @@ PACKAGES=(
 # symbolic links for programs
 sudo ln -s /usr/bin/subl /usr/bin/sublime-text
 
-# set default shell to zsh for root
-sudo chsh -s /usr/bin/zsh
-
 #
 # System Configuration
 #
@@ -135,11 +140,12 @@ sudo chsh -s /usr/bin/zsh
 # Up the inotify limits to reasonable values for a dev machine
 cat <<EOF | sudo tee -a /etc/sysctl.d/90-raise-inotify-limits.conf
 fs.inotify.max_user_instances   = 2048    # default 128,    max number of inotify instances per user
-fs.inotify.max_user_watches     = 1048576 # default 524288, max number of file watches per user
+fs.inotify.max_user_watches     = 1048576 # default 8192, max number of file watches per user
 EOF
 echo 2048    | sudo tee /proc/sys/fs/inotify/max_user_instances
 echo 1048576 | sudo tee /proc/sys/fs/inotify/max_user_watches
 
+# TODO: do we still want powerline?  is this the right way to install?
 # install powerline fonts - fontconfig version - adds symbols rather than patching fonts
 sudo wget -O /etc/fonts/conf.d/10-powerline-symbols.conf https://raw.github.com/Lokaltog/powerline/develop/font/10-powerline-symbols.conf
 sudo wget -O /usr/share/fonts/PowerlineSymbols.otf https://raw.github.com/Lokaltog/powerline/develop/font/PowerlineSymbols.otf
@@ -151,7 +157,7 @@ sudo sed -i 's/^#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' /etc/sysctl.conf
 
 # allow ufw forwading for docker (allows us to access docker machines from other hosts)
 sudo sed -i 's/^DEFAULT_FORWARD_POLICY="DROP"/DEFAULT_FORWARD_POLICY="ACCEPT"/' /etc/default/ufw
-sudo ufw allow 4243/tcp
+sudo ufw allow 2375/tcp
 sudo ufw reload
 
 ```
