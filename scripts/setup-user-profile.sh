@@ -25,3 +25,7 @@ apm install \
   color-picker \
   editorconfig \
   imdone-atom
+
+# npm config
+# use user path, not install path
+npm config set prefix '~/npm/'
