@@ -15,6 +15,10 @@ curl \
   -o $HOME/.config/sublime-text-3/Packages/User/Preferences.sublime-settings \
   --remote-name https://raw.githubusercontent.com/micnigh/linux-mint-17-2-cinnamon-workstation-bootstrap/master/files/.config/sublime-text-3/Packages/User/Preferences.sublime-settings
 
+# solarized terminal
+sh -c 'curl -sSL https://raw.githubusercontent.com/chriskempson/base16-gnome-terminal/master/base16-solarized.dark.sh | bash'; # setup
+gconftool-2 --set --type string /apps/gnome-terminal/global/default_profile base-16-solarized-dark
+
 # apm packages
 apm install \
   minimap \
