@@ -33,11 +33,6 @@ sudo add-apt-repository -y ppa:webupd8team/sublime-text-3; # sublime text 3
 curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -; # nodejs 4 - [see](https://github.com/nodesource/distributions)
 sudo add-apt-repository -y ppa:ubuntu-desktop/ubuntu-make; # util to install various ides/dev tools on ubuntu
 
-# atom - install deb as atom has its own update mechanism
-curl -L $(curl -s https://api.github.com/repos/atom/atom/releases/latest | grep 'browser_' | grep 'atom-amd64.deb' | cut -d\" -f4 ) > atom-amd64.deb
-sudo dpkg --install atom-amd64.deb
-rm atom-amd64.deb
-
 # chrome
 wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
@@ -106,6 +101,11 @@ PACKAGES=(
   nodejs                    # Javascript v8 server engine
 
 ); sudo apt-get install -y --force-yes -o Dpkg::Options::="--force-overwrite" "${PACKAGES[@]}"; unset PACKAGES
+
+# atom - install deb as atom has its own update mechanism - requires git, node
+curl -L $(curl -s https://api.github.com/repos/atom/atom/releases/latest | grep 'browser_' | grep 'atom-amd64.deb' | cut -d\" -f4 ) > atom-amd64.deb
+sudo dpkg --install atom-amd64.deb
+rm atom-amd64.deb
 
 PACKAGES=(
 
