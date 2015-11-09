@@ -11,6 +11,9 @@ sudo apt-get update;
 sudo apt-get install -y upgrade;
 sudo apt-get install -y dist-upgrade;
 
+# need curl to run scripts
+sudo apt-get install -y curl;
+
 # install packages
 sudo sh -c 'curl -sSL https://raw.githubusercontent.com/micnigh/linux-workstation-bootstrap/master/scripts/install-packages.sh | bash';
 
