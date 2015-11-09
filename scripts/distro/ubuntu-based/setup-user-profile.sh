@@ -11,6 +11,7 @@ curl \
   -o $HOME/.config/sublime-text-3/Installed\ Packages/Package\ Control.sublime-package \
   --remote-name http://sublime.wbond.net/Package%20Control.sublime-package
 
+mkdir -p $HOME/.config/sublime-text-3/Packages/User
 curl \
   -o $HOME/.config/sublime-text-3/Packages/User/Preferences.sublime-settings \
   --remote-name https://raw.githubusercontent.com/micnigh/linux-workstation-bootstrap/master/files/.config/sublime-text-3/Packages/User/Preferences.sublime-settings
