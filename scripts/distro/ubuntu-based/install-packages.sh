@@ -191,14 +191,14 @@ case "$(lsb_release -si)" in
 	Ubuntu)
 		case "$DESKTOP_SESSION" in
       ubuntu)
-        sudo sh -c 'curl -sSL https://raw.githubusercontent.com/micnigh/linux-workstation-bootstrap/master/scripts/distro/ubuntu-based/ubuntu-unity/install-packages.sh | bash';
+        sudo -E sh -c 'curl -sSL https://raw.githubusercontent.com/micnigh/linux-workstation-bootstrap/master/scripts/distro/ubuntu-based/ubuntu-unity/install-packages.sh | bash';
       ;;
     esac
 	;;
   LinuxMint)
     case "$DESKTOP_SESSION" in
       cinnamon)
-        sudo sh -c 'curl -sSL https://raw.githubusercontent.com/micnigh/linux-workstation-bootstrap/master/scripts/distro/ubuntu-based/linux-mint-cinnamon/install-packages.sh | bash';
+        sudo -E sh -c 'curl -sSL https://raw.githubusercontent.com/micnigh/linux-workstation-bootstrap/master/scripts/distro/ubuntu-based/linux-mint-cinnamon/install-packages.sh | bash';
       ;;
     esac
   ;;

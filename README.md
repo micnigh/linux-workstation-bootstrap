@@ -15,7 +15,7 @@ sudo apt-get install -y dist-upgrade;
 sudo apt-get install -y curl;
 
 # install packages
-sudo sh -c 'curl -sSL https://raw.githubusercontent.com/micnigh/linux-workstation-bootstrap/master/scripts/install-packages.sh | bash';
+sudo -E sh -c 'curl -sSL https://raw.githubusercontent.com/micnigh/linux-workstation-bootstrap/master/scripts/install-packages.sh | bash';
 
 # setup user profile
 sh -c 'curl -sSL https://raw.githubusercontent.com/micnigh/linux-workstation-bootstrap/master/scripts/setup-user-profile.sh | bash';
