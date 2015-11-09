@@ -1,7 +1,22 @@
 #!/bin/bash
 
 # Use fastest mirror
-sudo sed -i 's/archive\.ubuntu\.com/mirrors.us.kernel.org/' /etc/apt/sources.list.d/official-package-repositories.list
+case "$(lsb_release -si)" in
+	Ubuntu)
+		case "$DESKTOP_SESSION" in
+      ubuntu)
+        sudo sed -i 's/archive\.ubuntu\.com/mirrors.us.kernel.org/' /etc/apt/sources.list
+      ;;
+    esac
+	;;
+  LinuxMint)
+    case "$DESKTOP_SESSION" in
+      cinnamon)
+        sudo sed -i 's/archive\.ubuntu\.com/mirrors.us.kernel.org/' /etc/apt/sources.list.d/official-package-repositories.list
+      ;;
+    esac
+  ;;
+esac
 
 sudo apt-get update
 sudo apt-get install -y curl
