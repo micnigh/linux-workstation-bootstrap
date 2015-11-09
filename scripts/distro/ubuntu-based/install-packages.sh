@@ -5,7 +5,7 @@ case "$(lsb_release -si)" in
 	Ubuntu)
 		case "$DESKTOP_SESSION" in
       ubuntu)
-        sudo sed -i 's/archive\.ubuntu\.com/mirrors.us.kernel.org/' /etc/apt/sources.list
+        sudo sed -i 's/us\.archive\.ubuntu\.com/mirrors.us.kernel.org/' /etc/apt/sources.list
       ;;
     esac
 	;;
