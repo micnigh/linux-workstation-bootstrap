@@ -33,7 +33,7 @@ git fetch --all
 git reset --hard origin/master
 
 # add .dotfiles to .bashrc
-echo ". ~/dotfiles.sh" >> ~/.bashrc
+echo ". ~/.dotfiles.sh" >> ~/.bashrc
 
 # setup git user
 git config --global user.email ""
