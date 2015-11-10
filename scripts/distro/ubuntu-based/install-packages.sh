@@ -187,6 +187,9 @@ sudo sed -i 's/^DEFAULT_FORWARD_POLICY="DROP"/DEFAULT_FORWARD_POLICY="ACCEPT"/' 
 sudo ufw allow 2375/tcp
 sudo ufw reload
 
+# cleanup
+sudo apt-get -y autoremove
+
 case "$(lsb_release -si)" in
 	Ubuntu)
 		case "$DESKTOP_SESSION" in
