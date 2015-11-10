@@ -32,6 +32,9 @@ git remote add origin https://github.com/micnigh/linux-dotfiles.git
 git fetch --all
 git reset --hard origin/master
 
+# add .dotfiles to .bashrc
+echo ". ~/dotfiles.sh" >> ~/.bashrc
+
 # setup git user
 git config --global user.email ""
 git config --global user.name ""
