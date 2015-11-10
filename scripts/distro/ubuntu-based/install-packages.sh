@@ -43,7 +43,7 @@ echo 'deb http://linux.dropbox.com/ubuntu trusty main' | sudo tee /etc/apt/sourc
 
 # docker
 sudo sh -c 'curl -sSL https://get.docker.com/ | sh'; # install latest docker tools
-sudo usermod -aG docker "$(logname)"
+sudo usermod -aG docker "$SUDO_USER"
 
 # docker-machine
 curl -L $(curl -s https://api.github.com/repos/docker/machine/releases/latest | grep 'browser_' | grep 'docker-machine_linux-amd64' | cut -d\" -f4) > machine.zip && \
@@ -80,7 +80,7 @@ PACKAGES=(
 
 # KVM - a linux virtual machine tool - great for android emulation
 #sudo apt-get install -y qemu-kvm libvirt-bin bridge-utils virt-manager
-#sudo adduser "$(logname)" libvirtd
+#sudo adduser "$SUDO_USER" libvirtd
 
 # virtualbox
 sudo apt-get install -y virtualbox-5.0
