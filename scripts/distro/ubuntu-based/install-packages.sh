@@ -83,7 +83,7 @@ PACKAGES=(
 #sudo adduser "$SUDO_USER" libvirtd
 
 # virtualbox
-sudo apt-get install -y virtualbox-5.0
+sudo apt-get install -y virtualbox
 
 PACKAGES=(
 
