@@ -87,6 +87,7 @@ for f in $TEMP_DIR/*.cer; do mv "$f" "${f%.cer}.crt"; done && \
 for f in $TEMP_DIR/*.crt; do mv "$f" "${f// /_}"; done && \
 mkdir -p /usr/share/ca-certificates/dod/ && \
 cp $TEMP_DIR/*.crt /usr/share/ca-certificates/dod/ && \
+rm -rf $TEMP_DIR && \
 dpkg-reconfigure ca-certificates
 ```
 
