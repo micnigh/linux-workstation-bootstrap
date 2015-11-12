@@ -1,6 +1,9 @@
 Bootstrap guide for new linux workstation setup.
 
-Supports Mint 17.2 Cinnamon or Ubuntu unity 15.10.
+Supports
+
+ - Mint 17.2 Cinnamon
+ - Ubuntu unity 15.10.
 
 # Quick start
 
