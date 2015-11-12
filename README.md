@@ -108,7 +108,37 @@ sudo mount -a
 
 #### Add DOD ssl certs
 
-All dod certs from https://militarycac.com/maccerts/ or http://dodpki.c3pki.chamb.disa.mil/rootca.html
+Add dod certs from https://militarycac.com/maccerts/ and http://dodpki.c3pki.chamb.disa.mil/rootca.html
+
+##### Install into user account (firefox, chrome, thunderbird)
+
+```bash
+sudo apt-get -y install libnss3-tools
+
+TEMP_DIR=$(mktemp)
+wget --no-check-certificate https://militarycac.com/maccerts/AllCerts.zip -P $TEMP_DIR
+unzip -d $TEMP_DIR $TEMP_DIR/AllCerts.zip
+wget http://dodpki.c3pki.chamb.disa.mil/rel3_dodroot_2048.cac -P $TEMP_DIR
+wget http://dodpki.c3pki.chamb.disa.mil/dodeca.cac -P $TEMP_DIR
+wget http://dodpki.c3pki.chamb.disa.mil/dodeca2.cac -P $TEMP_DIR
+for f in $TEMP_DIR/*.cer; do mv "$f" "${f// /_}"; done
+for certDB in $(find ~/.mozilla* ~/.thunderbird ~/.pki -name "cert*.db" 2>/dev/null)
+do
+  certDBDir=$(dirname $certDB)
+  echo "installing certs to db in $certDBDir"
+  for cert in $TEMP_DIR/{*.cer,*.cac}
+  do
+    echo "$cert"
+    # install to new format, `cert9.db, key4.db`
+    certutil -d sql:$certDBDir -A -t "TC" -n "$(basename $cert)" -i "$cert"
+    # install to old format, `cert8.db, key3.db`
+    certutil -d $certDBDir -A -t "TC" -n "$(basename $cert)" -i "$cert"
+  done
+done
+
+# test certs installed with
+# certutil -L -d ~/.mozilla/firefox/*.default/
+```
 
 ##### Install globally into root certificate store
 
@@ -124,18 +154,4 @@ mkdir -p /usr/share/ca-certificates/dod/ && \
 cp $TEMP_DIR/*.crt /usr/share/ca-certificates/dod/ && \
 rm -rf $TEMP_DIR && \
 dpkg-reconfigure ca-certificates
-```
-
-##### Install into user account (firefox and chrome only)
-
-```bash
-sudo apt-get -y install libnss3-tools
-
-TEMP_DIR=$(mktemp) && \
-wget http://dodpki.c3pki.chamb.disa.mil/rel3_dodroot_2048.cac -P $TEMP_DIR && \
-wget http://dodpki.c3pki.chamb.disa.mil/dodeca.cac -P $TEMP_DIR && \
-wget http://dodpki.c3pki.chamb.disa.mil/dodeca2.cac -P $TEMP_DIR && \
-for n in $TEMP_DIR/*.cac; do certutil -d sql:$HOME/.pki/nssdb -A -t TC -n "$n" -i "$n"; done && \
-for n in $TEMP_DIR/*.cac; do certutil -d sql:$HOME/.mozilla/firefox/*.default/ -A -t TC -n $n -i $n; done && \
-rm -rf $TEMP_DIR
 ```
