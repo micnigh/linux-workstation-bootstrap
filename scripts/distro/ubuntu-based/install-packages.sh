@@ -112,6 +112,7 @@ PACKAGES=(
   # misc
   python-gpgme # dropbox support lib
   gtk-redshift # redshift - adjusts displays to minimize blue light at night
+	p7zip-full # 7zip support
 
 ); sudo apt-get install -y --force-yes -o Dpkg::Options::="--force-overwrite" "${PACKAGES[@]}"; unset PACKAGES
 
