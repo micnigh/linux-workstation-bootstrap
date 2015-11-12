@@ -8,8 +8,8 @@ Supports Mint 17.2 Cinnamon or Ubuntu unity 15.10.
 
 # manually do all upgrades/updates and install drivers
 sudo apt-get update;
-sudo apt-get install -y upgrade;
-sudo apt-get install -y dist-upgrade;
+sudo apt-get -y upgrade;
+sudo apt-get -y dist-upgrade;
 
 # need curl to run scripts
 sudo apt-get install -y curl;
@@ -70,6 +70,38 @@ mv ~/.dropbox-dist/dropbox-lnx.x86_64*/libGL.so.1 libGL.so.1.bak
 #### Blank screen when booting livecd
 
 Often related to `nvidia` gpu's, turn on `nomodeset` in kernel params when booting.
+
+#### Add smb network folder
+
+```bash
+sudo apt-get install -y cifs-utils
+```
+
+Create a file `/home/ubuntuuser/.smbcredentials` containing below
+
+```
+username=
+password=
+```
+
+Fix the permissions so only ubuntuuser can read it
+
+```bash
+chmod 600 /home/ubuntuuser/.smbcredentials
+chown ubuntuuser:ubuntuuser /home/ubuntuuser/.smbcredentials
+```
+
+Append share info to /etc/fstab/
+
+```
+//servername/sharename  /media/windowsshare  cifs   uid=ubuntuuser,credentials=/home/ubuntuuser/.smbcredentials,iocharset=utf8,sec=ntlm   0       0
+```
+
+Test that it works
+
+```bash
+sudo mount -a
+```
 
 #### Add DOD ssl certs
 
