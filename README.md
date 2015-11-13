@@ -24,7 +24,8 @@ sudo -E sh -c 'curl -sSL https://raw.githubusercontent.com/micnigh/linux-worksta
 sh -c 'curl -sSL https://raw.githubusercontent.com/micnigh/linux-workstation-bootstrap/master/scripts/setup-user-profile.sh | bash';
 
 # install ssh keys, then fix permissions
-chmod 600 ~/.ssh/
+ssh-keygen -f ~/.ssh/id_rsa -t rsa -N '' -C 'email@email.com'
+chmod 700 ~/.ssh/
 chmod 600 ~/.ssh/id_rsa*
 
 # add dotfiles from git bash
