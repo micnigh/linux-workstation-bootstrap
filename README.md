@@ -155,3 +155,13 @@ cp $TEMP_DIR/*.crt /usr/share/ca-certificates/dod/ && \
 rm -rf $TEMP_DIR && \
 dpkg-reconfigure ca-certificates
 ```
+
+#### Docker DNS Issues
+
+Docker sometimes cannot detect dns settings, lookup what's in `Connection Information` on the up/down arrow icon in the system tray and the `search` field in /etc/resolv.conf.  Then modify `/etc/default/docker` line `DOCKER_OPTs` to include something like
+
+```bash
+DOCKER_OPTS="--dns=172.20.20.12 --dns=172.20.20.11 --dns-search=ern.nps.edu"
+```
+
+then `sudo service docker restart` to apply
