@@ -3,7 +3,7 @@
 # auto start docker daemon
 sudo systemctl enable docker
 
-sudo apt-get install -y unity-tweak-tool
+sudo apt-get install -y unity-tweak-tool compizconfig-settings-manager
 
 # workaround so we dont need to install unity-webapps-service package
 # http://askubuntu.com/a/653634
