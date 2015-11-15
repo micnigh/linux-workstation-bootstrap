@@ -83,7 +83,13 @@ PACKAGES=(
 #sudo adduser "$SUDO_USER" libvirtd
 
 # virtualbox
-sudo apt-get install -y virtualbox
+PACKAGES=(
+
+  # system|dev tools
+  virtualbox               # VM tool
+	virtualbox-ext-pack      # ext pack - for extended drivers like usb3
+
+); sudo apt-get install -y --force-yes -o Dpkg::Options::="--force-overwrite" "${PACKAGES[@]}"; unset PACKAGES
 
 PACKAGES=(
 
