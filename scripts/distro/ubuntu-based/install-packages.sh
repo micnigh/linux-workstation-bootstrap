@@ -41,6 +41,10 @@ sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /et
 sudo apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E
 echo 'deb http://linux.dropbox.com/ubuntu trusty main' | sudo tee /etc/apt/sources.list.d/dropbox.list
 
+# virtualbox
+wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add -
+sudo sh -c 'echo "deb http://download.virtualbox.org/virtualbox/debian wily contrib" >> /etc/apt/sources.list.d/virtualbox.list'
+
 # docker
 sudo sh -c 'curl -sSL https://get.docker.com/ | sh'; # install latest docker tools
 sudo usermod -aG docker "$SUDO_USER"
@@ -86,7 +90,7 @@ PACKAGES=(
 PACKAGES=(
 
   # system|dev tools
-  virtualbox               # VM tool
+  virtualbox-5.0               # VM tool
 	virtualbox-ext-pack      # ext pack - for extended drivers like usb3
 
 ); sudo apt-get install -y --force-yes -o Dpkg::Options::="--force-overwrite" "${PACKAGES[@]}"; unset PACKAGES
