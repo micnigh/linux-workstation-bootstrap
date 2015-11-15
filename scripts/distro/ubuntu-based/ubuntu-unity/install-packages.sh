@@ -7,7 +7,7 @@ sudo apt-get install -y unity-tweak-tool compizconfig-settings-manager
 
 # workaround so we dont need to install unity-webapps-service package
 # http://askubuntu.com/a/653634
-TEMP_DIR=$(mktemp)
+TEMP_DIR=$(mktemp -d)
 cd $TEMP_DIR
 apt-get download unity-webapps-service
 ar xvf *

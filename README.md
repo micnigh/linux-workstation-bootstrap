@@ -116,7 +116,7 @@ Add dod certs from https://militarycac.com/maccerts/ and http://dodpki.c3pki.cha
 ```bash
 sudo apt-get -y install libnss3-tools
 
-TEMP_DIR=$(mktemp)
+TEMP_DIR=$(mktemp -d)
 wget --no-check-certificate https://militarycac.com/maccerts/AllCerts.zip -P $TEMP_DIR
 unzip -d $TEMP_DIR $TEMP_DIR/AllCerts.zip
 wget http://dodpki.c3pki.chamb.disa.mil/rel3_dodroot_2048.cac -P $TEMP_DIR
@@ -146,7 +146,7 @@ done
 ```bash
 sudo su
 
-TEMP_DIR=$(mktemp) && \
+TEMP_DIR=$(mktemp -d) && \
 wget --no-check-certificate https://militarycac.com/maccerts/AllCerts.zip -P $TEMP_DIR && \
 unzip -d $TEMP_DIR $TEMP_DIR/AllCerts.zip && \
 for f in $TEMP_DIR/*.cer; do mv "$f" "${f%.cer}.crt"; done && \
