@@ -86,6 +86,10 @@ PACKAGES=(
 #sudo apt-get install -y qemu-kvm libvirt-bin bridge-utils virt-manager
 #sudo adduser "$SUDO_USER" libvirtd
 
+# debconf options
+# looked up via `sudo apt-get -y install debconf-utils; sudo debconf-get-selections | grep virtualbox`
+echo "virtualbox-ext-pack virtualbox-ext-pack/license boolean true" | sudo debconf-set-selections;
+
 # virtualbox
 PACKAGES=(
 
@@ -131,7 +135,7 @@ sudo umake android $HOME/.local/share/umake/android/android-studio --accept-lice
 sudo umake ide eclipse $HOME/.local/share/umake/ide/eclipse; # install eclipse
 
 # set answers to package prompts
-echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections;
+echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo -set-selections;
 PACKAGES=(
 
   # fonts
