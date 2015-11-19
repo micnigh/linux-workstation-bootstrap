@@ -191,3 +191,16 @@ EOF
 ```
 
 then redetect changes `systemctl daemon-reload` and `sudo service docker restart` to apply
+
+#### Cisco anyconnect VPN
+
+```bash
+# download encryption libs
+sudo apt-get install -y lib32z1 lib32ncurses5
+
+# download then run `vpnsetup.sh` cisco anyconnect script for linux
+sudo sh vpnsetup.sh
+
+# restart vpn service
+sudo systemctl daemon-reload
+```
