@@ -156,38 +156,18 @@ dpkg-reconfigure ca-certificates
 
 #### Docker DNS Issues
 
-Docker sometimes cannot detect dns settings, lookup what's in `Connection Information` on the up/down arrow icon in the system tray and the `search` field in /etc/resolv.conf.  Then modify `/etc/default/docker` line `DOCKER_OPTs` to include something like
+Docker sometimes cannot detect dns settings, lookup what's in `Connection Information` on the up/down arrow icon in the system tray and the `search` field in /etc/resolv.conf.  
 
-```bash
-DOCKER_OPTS="--dns=172.20.20.12 --dns=172.20.20.11 --dns-search=ern.nps.edu"
+For example, you might add the following to `/etc/docker/daemon.json`
+
+```json
+{
+ "dns": ["172.20.20.11", "172.20.20.12"],
+ "dns-search: ["ern.nps.edu"]
+}
 ```
 
-On Ubuntu 15.10 - the env file is not automatically applied, but we can fix that by running below (copied and modified from `/lib/systemd/system/docker.service` from https://github.com/docker/docker/issues/9889#issuecomment-120927382)
-
-```bash
-sudo tee /etc/systemd/system/docker.service << "EOF"
-[Unit]
-Description=Docker Application Container Engine
-Documentation=https://docs.docker.com
-After=network.target docker.socket
-Requires=docker.socket
-
-[Service]
-EnvironmentFile=-/etc/default/docker
-Type=notify
-ExecStart=/usr/bin/docker daemon $DOCKER_OPTS -H fd://
-MountFlags=slave
-LimitNOFILE=1048576
-LimitNPROC=1048576
-LimitCORE=infinity
-
-[Install]
-WantedBy=multi-user.target
-
-EOF
-```
-
-then redetect changes `systemctl daemon-reload` and `sudo service docker restart` to apply
+then restart docker with `sudo service docker restart` to apply
 
 #### Cisco anyconnect VPN
 
